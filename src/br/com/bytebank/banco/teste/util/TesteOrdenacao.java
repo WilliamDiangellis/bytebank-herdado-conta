@@ -1,6 +1,7 @@
 package br.com.bytebank.banco.teste.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import br.com.bytebank.banco.modelo.Conta;
 import br.com.bytebank.banco.modelo.ContaCorrente;
 import br.com.bytebank.banco.modelo.ContaPoupanca;
 
-public class Teste {
+public class TesteOrdenacao {
 
 	public static void main(String[] args) {
 
@@ -46,14 +47,19 @@ public class Teste {
 		for (Conta conta : lista) {
 			System.out.println(conta);
 		}
+		
+		//NumeroDaContaComparator comparator = new NumeroDaContaComparator();
+		//lista.sort(new TitularDaContaComparator());
+		lista.sort(null);
+		
+		//Collections.sort(lista, new NumeroDaContaComparator());
+		//Collections.sort(lista);
+		//Collections.reverse(lista);
 
-		NumeroDaContaComparator comparator = new NumeroDaContaComparator();
-		lista.sort(comparator);
-
-		System.out.println("-------------------------------------");
+		System.out.println("-------------------------------------------------");
 
 		for (Conta conta : lista) {
-			System.out.println(conta);
+			System.out.println(conta + ", " + conta.getTitular().getNome());
 		}
 	}
 }
@@ -62,24 +68,26 @@ class TitularDaContaComparator implements Comparator<Conta> {
 
 	@Override
 	public int compare(Conta c1, Conta c2) {
-		
-		String nomeC1 = c1.getTitular().getNome().trim();
-		return 0;
+		String nomeC1 = c1.getTitular().getNome();
+		String nomeC2 = c2.getTitular().getNome();
+		return nomeC1.compareTo(nomeC2);
 	}
-
 }
 
 class NumeroDaContaComparator implements Comparator<Conta> {
 
 	@Override
 	public int compare(Conta c1, Conta c2) {
-
-		if (c1.getNumero() < c2.getNumero()) {
-			return -345;
-		}
-		if (c1.getNumero() > c2.getNumero()) {
-			return 171;
-		}
-		return 0;
+		return Integer.compare(c1.getNumero(), c2.getNumero());
+		
+//		return c1.getNumero() - c2.getNumero();
+		
+//		if (c1.getNumero() < c2.getNumero()) {
+//			return -345;
+//		}
+//		if (c1.getNumero() > c2.getNumero()) {
+//			return 171;
+//		}
+//		return 0;
 	}
 }
